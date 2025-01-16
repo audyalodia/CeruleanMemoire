@@ -45,6 +45,7 @@
             this.HomeBtn = new System.Windows.Forms.Button();
             this.QuestionCountTxt = new System.Windows.Forms.Label();
             this.AnswerCountTxt = new System.Windows.Forms.Label();
+            this.DeleteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -95,7 +96,6 @@
             this.Question.Size = new System.Drawing.Size(100, 31);
             this.Question.TabIndex = 8;
             this.Question.Text = "Question:";
-            this.Question.Click += new System.EventHandler(this.Question_Click_1);
             // 
             // QuestionTxt
             // 
@@ -142,7 +142,6 @@
             this.FlashcardDgv.RowTemplate.Height = 24;
             this.FlashcardDgv.Size = new System.Drawing.Size(677, 359);
             this.FlashcardDgv.TabIndex = 12;
-            this.FlashcardDgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FlashcardDgv_CellContentClick);
             // 
             // Column1
             // 
@@ -197,7 +196,6 @@
             this.pictureBox4.Size = new System.Drawing.Size(968, 175);
             this.pictureBox4.TabIndex = 15;
             this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // HomeBtn
             // 
@@ -236,12 +234,25 @@
             this.AnswerCountTxt.TabIndex = 18;
             this.AnswerCountTxt.TextChanged += new System.EventHandler(this.AnswerTxt_TextChanged);
             // 
+            // DeleteBtn
+            // 
+            this.DeleteBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(224)))), ((int)(((byte)(244)))));
+            this.DeleteBtn.Font = new System.Drawing.Font("Segoe Print", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DeleteBtn.Location = new System.Drawing.Point(1553, 320);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(114, 45);
+            this.DeleteBtn.TabIndex = 19;
+            this.DeleteBtn.Text = "Delete";
+            this.DeleteBtn.UseVisualStyleBackColor = false;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            // 
             // CreateDeck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(143)))), ((int)(((byte)(182)))));
             this.ClientSize = new System.Drawing.Size(1902, 1033);
+            this.Controls.Add(this.DeleteBtn);
             this.Controls.Add(this.AnswerCountTxt);
             this.Controls.Add(this.QuestionCountTxt);
             this.Controls.Add(this.HomeBtn);
@@ -285,5 +296,6 @@
         private System.Windows.Forms.Button HomeBtn;
         private System.Windows.Forms.Label QuestionCountTxt;
         private System.Windows.Forms.Label AnswerCountTxt;
+        private System.Windows.Forms.Button DeleteBtn;
     }
 }

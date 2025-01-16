@@ -43,7 +43,13 @@ namespace CeruleanMémoire
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (printDialogFlashcard.ShowDialog() == DialogResult.OK) {
+            if (printDialogFlashcard.ShowDialog() == DialogResult.OK)
+            {
+                if (flashcards == null || flashcards.Count == 0)
+                {
+                    MessageBox.Show("Tidak ada flashcard yang tersedia untuk dicetak.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 printDocumentFlashcard.Print();
             }
         }
@@ -87,7 +93,7 @@ namespace CeruleanMémoire
                 return;
             }
 
-            Overview overviewForm = new Overview(lastQuizTime);
+            Overview overviewForm = new Overview(flashcards, lastQuizTime);
             overviewForm.Show();
             this.Close();
         }
@@ -97,24 +103,40 @@ namespace CeruleanMémoire
             // set posisi text dan spasi antar text
             int yPosition = 50;
             int lineHeight = 50;
+            int spaceHeight = 20;
+
+            // debug log
+            Console.WriteLine($"Flashcards count: {flashcards.Count}");
+
+            if (flashcards == null || flashcards.Count == 0)
+            {
+                e.Graphics.DrawString("Tidak ada flashcards untuk dicetak.", new Font("Arial", 12), Brushes.Black, 50, yPosition);
+                return;
+            }
 
             // judul
             e.Graphics.DrawString("List Flashcards", new Font("Arial", 16, FontStyle.Bold), Brushes.Black, 50, yPosition);
-            yPosition += lineHeight * 2;
+            yPosition += lineHeight;
 
             // Overview waktu
-            string summary = $"Waktu belajar: {lastQuizTime.Minutes:D2}:{lastQuizTime.Seconds:D2}";
+            string summary = $"Waktu belajar: {lastQuizTime.Hours:D2}:{lastQuizTime.Minutes:D2}:{lastQuizTime.Seconds:D2}";
             e.Graphics.DrawString(summary, new Font("Arial", 12), Brushes.Black, 50, yPosition);
-            yPosition += lineHeight;
+            yPosition += lineHeight * 2;
 
             // perulangan untuk list flashcards
             foreach (var flashcard in flashcards) 
             {
-                e.Graphics.DrawString($"Question: {flashcard.Question}", new Font("Arial", 12), Brushes.Black, 50, yPosition);
-                yPosition += lineHeight;
+                string questionText = flashcard.Question ?? "No Question Available";
+                string answerText = flashcard.Answer ?? "No Answer Available";
 
-                e.Graphics.DrawString($"Answer: {flashcard.Answer}", new Font("Arial", 12), Brushes.Black, 50, yPosition);
-                yPosition += lineHeight * 2;
+                e.Graphics.DrawString($"Question: {questionText}", new Font("Arial", 12), Brushes.Black, 50, yPosition);
+                yPosition += spaceHeight;
+
+                e.Graphics.DrawString($"Answer: {answerText}", new Font("Arial", 12), Brushes.Black, 50, yPosition);
+                yPosition += spaceHeight * 2;
+
+                // debug log
+                Console.WriteLine($"Printing Flashcard - Question: {flashcard.Question}, Answer: {flashcard.Answer}");
             }
         }
 
@@ -129,9 +151,5 @@ namespace CeruleanMémoire
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

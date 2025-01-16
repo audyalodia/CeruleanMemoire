@@ -47,7 +47,6 @@
             this.FlashcardTxt.Size = new System.Drawing.Size(859, 357);
             this.FlashcardTxt.TabIndex = 0;
             this.FlashcardTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FlashcardTxt.Click += new System.EventHandler(this.FlashcardTxt_Click);
             // 
             // FlipBtn
             // 
@@ -97,7 +96,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(1453, 719);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Timer
             // 

@@ -15,7 +15,7 @@ namespace CeruleanMémoire
     public partial class CreateDeck : Form
     {
         private List<Flashcard> flashcards = new List<Flashcard>(); //init flashcard
-        private string deckFilePath = "deck.json"; // simpan deck ke json
+        private string deckFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "deck.json"); // simpan deck ke json
 
         public CreateDeck()
         {
@@ -39,23 +39,8 @@ namespace CeruleanMémoire
 
         private int CalculateWordCount(string text)
         {
-            if(string.IsNullOrEmpty(text))  return 0;
+            if (string.IsNullOrEmpty(text)) return 0;
             return text.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
-        }
-
-        private void Question_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Answer_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FlashcardDgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -65,7 +50,7 @@ namespace CeruleanMémoire
                 MessageBox.Show("Tidak ada flashcards yang bisa disimpan!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            SaveDeckToFile (flashcards);
+            SaveDeckToFile(flashcards);
         }
 
         private void AddToFlashcard_Click(object sender, EventArgs e)
@@ -97,7 +82,8 @@ namespace CeruleanMémoire
 
         private void SaveDeckToFile(List<Flashcard> flashcards)
         {
-            try {
+            try
+            {
                 var json = JsonConvert.SerializeObject(flashcards, Formatting.Indented);
                 File.WriteAllText(deckFilePath, json);
                 MessageBox.Show("Deck berhasil disimpan!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -112,8 +98,9 @@ namespace CeruleanMémoire
         {
             try
             {
-                if (!File.Exists(deckFilePath)){
-                    return new List<Flashcard>(); 
+                if (!File.Exists(deckFilePath))
+                {
+                    return new List<Flashcard>();
                 }
                 var json = File.ReadAllText(deckFilePath); // baca file yang sudah ada 
                 return JsonConvert.DeserializeObject<List<Flashcard>>(json);
@@ -131,7 +118,7 @@ namespace CeruleanMémoire
 
             foreach (var flashcard in flashcards)
             {
-                FlashcardDgv.Rows.Add(flashcard.Question, flashcard.Answer);    
+                FlashcardDgv.Rows.Add(flashcard.Question, flashcard.Answer);
             }
         }
 
@@ -142,16 +129,6 @@ namespace CeruleanMémoire
             mainForm.Show();
 
             this.Hide();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Question_Click_1(object sender, EventArgs e)
-        {
-
         }
 
         private void QuestionTxt_TextChanged(object sender, EventArgs e)
@@ -166,9 +143,24 @@ namespace CeruleanMémoire
             AnswerCountTxt.Text = $"Word Count: {wordCount}";
         }
 
-        private void pictureBox4_Click(object sender, EventArgs e)
+        private void DeleteBtn_Click(object sender, EventArgs e)
         {
+            if (FlashcardDgv.SelectedRows.Count > 0)
+            {
+                var selectedRow = FlashcardDgv.SelectedRows[0];
+                int rowIndex = selectedRow.Index;
+                FlashcardDgv.Rows.RemoveAt(rowIndex);
+                flashcards.RemoveAt(rowIndex);
 
+                // pesan konfirmasi
+                MessageBox.Show("Flashcard berhasil dihapus!");
+                UpdateFlashcardsUI();
+            }
+            else
+            {
+                MessageBox.Show("Tolong pilih baris yang ingin dihapus.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
+

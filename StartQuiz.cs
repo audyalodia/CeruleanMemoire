@@ -92,20 +92,10 @@ namespace CeruleanMémoire
             this.Close();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-          
-        }
-
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeSpan timeElapsed = DateTime.Now - startTime;
             Timer.Text = $"Waktu: {timeElapsed.Minutes:D2}:{timeElapsed.Seconds:D2}";
-        }
-
-        private void FlashcardTxt_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -14,15 +14,17 @@ namespace CeruleanMémoire
     {
 
         private TimeSpan quizTime;
+        private List<Flashcard> flashcards;
 
         public Overview()
         {
             InitializeComponent();
         }
 
-        public Overview(TimeSpan timeElapsed)
+        public Overview(List<Flashcard> flashcards, TimeSpan timeElapsed)
         {
             InitializeComponent();
+            this.flashcards = flashcards ?? new List<Flashcard>();
             quizTime = timeElapsed;
             DisplayTime();
         }
@@ -49,7 +51,7 @@ namespace CeruleanMémoire
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form1 mainForm = new Form1();
+            Form1 mainForm = new Form1(flashcards, quizTime);
             mainForm.Show();
             this.Close();
         }
